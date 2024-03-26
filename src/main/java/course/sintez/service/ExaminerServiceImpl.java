@@ -3,8 +3,10 @@ package course.sintez.service;
 import course.sintez.exception.NotEnoughQuestionsException;
 import course.sintez.model.Question;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
+@Service
 
 public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService javaService;

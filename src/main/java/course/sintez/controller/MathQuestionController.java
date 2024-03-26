@@ -21,11 +21,14 @@ public class MathQuestionController {
     public Question addQuestion(@RequestParam String question, @RequestParam String answer){
         return service.add(question,answer);
     }
+
+
+
     @GetMapping("/remove")
     public Question remove(@RequestParam String question,@RequestParam String answer){
         return service.remove(new Question(question,answer));
     }
-    @GetMapping("/add")
+    @GetMapping
     public Collection<Question> getAll(){
         return service.getAll();
     }

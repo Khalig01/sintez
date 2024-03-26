@@ -14,23 +14,26 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/java")
-public class JavaQuestionController {
-   private final QuestionService service;
-   public JavaQuestionController(@Qualifier("java") QuestionService service){
 
-       this.service=service;
-   }
+public class JavaQuestionController {
+   private final QuestionService questionService;
+
+    public JavaQuestionController(@Qualifier("java") QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/add")
     public Question addQuestion(@RequestParam String question,@RequestParam String answer){
-        return service.add(question,answer);
+        return questionService.add(question,answer);
     }
+
+
     @GetMapping("/remove")
     public Question remove(@RequestParam String question,@RequestParam String answer){
-        return service.remove(new Question(question,answer));
+        return questionService.remove(new Question(question,answer));
     }
-    @GetMapping("/add")
+    @GetMapping
     public Collection<Question> getAll(){
-       return service.getAll();
+       return questionService.getAll();
     }
 }
