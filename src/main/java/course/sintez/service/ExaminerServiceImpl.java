@@ -11,32 +11,42 @@ import java.util.*;
 public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService javaService;
     private final QuestionService mathService;
-    private final Random random= new Random();
+    private final Random random = new Random();
+
     public ExaminerServiceImpl(@Qualifier("java") QuestionService mathService,
                                @Qualifier("math") QuestionService javaService) {
-        this.mathService=mathService;
-         this.javaService=javaService;
+        this.mathService = mathService;
+        this.javaService = javaService;
 
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        var allQuestions=new ArrayList<>(mathService.getAll());
-        allQuestions.addAll(javaService.getAll());
+        List<Question> questions = new ArrayList<>();
 
+        while (questions.size() < amount) {
+            if (random.nextBoolean()) {
+                             Question question = mathService.getRandomQuestion();
+                if (question != null) {
+                    questions.add(question);
+                } else {
+                    throw new NotEnoughQuestionsException();
+                }
+            } else {
+                Question question = javaService.getRandomQuestion();
+                if (question != null) {
+                    questions.add(question);
+                } else {
+                    throw new NotEnoughQuestionsException();
+                }
+            }
 
-        if(amount>allQuestions.size()){
-            throw new NotEnoughQuestionsException();
-        }
-        if(amount== allQuestions.size()){
-            return allQuestions;
-        }
-        Set<Question> questions= new HashSet<>();
-        while(questions.size()< amount){
-           var question= random.nextBoolean() ? mathService.getRandomQuestion() : javaService.getRandomQuestion();
-            questions.add(question);
-        }
-return questions;
+            if (questions.size() >= amount ) {
 
+                break;
+            }
+        }
+
+        return questions;
     }
 }
