@@ -11,8 +11,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,12 +33,13 @@ class ExaminerServiceImplTest {
     JavaQuestionService javaQuestionService;
     @Mock
     MathQuestionService mathQuestionService;
-@InjectMocks
+    @InjectMocks
     ExaminerServiceImpl examinerService;
 
+    private static final int NUM_QUESTIONS = 2;
 
     void setUp() {
-      //  examinerService = new ExaminerServiceImpl(javaQuestionService, mathQuestionService);
+        //  examinerService = new ExaminerServiceImpl(javaQuestionService, mathQuestionService);
         when(javaQuestionService.getAll()).thenReturn(JAVA_QUESTIONS);
         when(mathQuestionService.getAll()).thenReturn(MATH_QUESTIONS);
     }
@@ -48,12 +51,12 @@ class ExaminerServiceImplTest {
 
     @Test
     void testRandomQuestions() {
-        when(javaQuestionService.getRandomQuestion())
-             //   .thenReturn(JAVA_QUESTIONS.get(0))
-                .thenReturn(JAVA_QUESTIONS.get(1));
-        when(mathQuestionService.getRandomQuestion())
-             //   .thenReturn(MATH_QUESTIONS.get(0))
-                .thenReturn(MATH_QUESTIONS.get(1));
+          when(javaQuestionService.getRandomQuestion())
+                //   .thenReturn(JAVA_QUESTIONS.get(0))
+                .thenReturn(JAVA_QUESTIONS.get(0));
+        //        when(mathQuestionService.getRandomQuestion())
+                //   .thenReturn(MATH_QUESTIONS.get(0))
+            //    .thenReturn(MATH_QUESTIONS.get(0));
 
 
         var actual = examinerService.getQuestions(1);
@@ -63,9 +66,16 @@ class ExaminerServiceImplTest {
                 JAVA_QUESTIONS.get(1),
                 MATH_QUESTIONS.get(0),
                 MATH_QUESTIONS.get(1));
-verify(javaQuestionService,atMostOnce()).getRandomQuestion();
-        verify(mathQuestionService,atMostOnce()).getRandomQuestion();
-     //   verifyZeroInteractions()
+        verify(javaQuestionService, atMostOnce()).getRandomQuestion();
+        verify(mathQuestionService, atMostOnce()).getRandomQuestion();
+        //   verifyZeroInteractions()
     }
 
+
+
+
+
 }
+
+
+

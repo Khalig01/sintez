@@ -13,7 +13,7 @@ public class MathQuestionService implements QuestionService {
     private final QuestionRepository repository;
     private final Random random= new Random();
     public  MathQuestionService(@Qualifier("mathRepository") QuestionRepository repository){
-        this.repository=repository;
+       this.repository=repository;
     }
 
     @Override
